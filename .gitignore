@@ -1,0 +1,64 @@
+# ===========================================================================
+# eICU-CRD is credentialed data released under a PhysioNet Data Use Agreement
+# that prohibits redistribution. Every collaborator must be individually
+# credentialed. NOTHING patient level may be committed.
+#
+# Journal PDFs obtained through institutional access are copyrighted and are
+# likewise excluded.
+# ===========================================================================
+
+# ---- patient level data, DUA protected ----
+data_private/
+*.csv.gz
+*.parquet
+*.feather
+*.sqlite
+*.duckdb
+
+# ---- fitted model objects ----
+# glm and glmer objects retain the full model frame, one row per patient.
+# results/models.rds is 69 MB and holds 136,236 rows in each of four models.
+results/models.rds
+*.rds
+
+# ---- copyrighted reference PDFs and their extracted text ----
+# Blanket exclusion, with our own outputs allowed back in.
+*.pdf
+!submission/Manuscript.pdf
+!submission/figures_pdf/*.pdf
+refs_text/
+
+# ---- derived figure formats, regenerable from R/15 ----
+figures/previews/
+submission/figures_png/
+
+# ---- credentials ----
+*.netrc
+*credentials*.json
+.env
+.Renviron
+
+# ---- R and Python ----
+.Rhistory
+.RData
+.Rproj.user/
+.Rproj
+__pycache__/
+*.pyc
+.venv/
+
+# ---- LaTeX build artefacts ----
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.toc
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+
+# ---- OS ----
+Thumbs.db
+.DS_Store
+~$*

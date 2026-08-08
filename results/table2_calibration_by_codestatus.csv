@@ -1,0 +1,11 @@
+cs_lab,cancer,n,pred,obs,smr,ICI,Emax
+Undocumented,Cancer,100,0.1569,0.07,0.446,0.0861,0.3262
+Undocumented,No cancer,5263,0.1108,0.088,0.794,0.021,0.1242
+Full therapy,Cancer,3389,0.1848,0.136,0.736,0.0485,0.1491
+Full therapy,No cancer,113988,0.1024,0.0627,0.612,0.0389,0.2481
+DNR-type,Cancer,729,0.2902,0.3374,1.163,0.0505,0.1074
+DNR-type,No cancer,11200,0.219,0.2562,1.17,0.0367,0.0461
+Partial withdrawal,Cancer,48,0.3127,0.3958,1.266,,
+Partial withdrawal,No cancer,641,0.2581,0.3136,1.215,0.0542,0.0772
+Comfort only,Cancer,60,0.4312,0.7333,1.7,0.2992,0.4466
+Comfort only,No cancer,818,0.393,0.7421,1.888,0.3444,0.4883

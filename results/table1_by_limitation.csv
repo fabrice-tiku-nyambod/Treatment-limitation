@@ -1,0 +1,14 @@
+variable,Full therapy,DNR type,Partial withdrawal,Comfort measures,Undocumented
+n,117377,11929,689,878,5363
+pct,86.2,8.8,0.5,0.6,3.9
+age_median,63,77,76,74,64
+age_over89_pct,2.2,15.6,19,13.8,3.9
+female_pct,45.1,54.1,55.9,50.5,45
+apache_median,49,66,69,85,50
+pred_mort_pct,10.5,22.3,26.2,39.6,11.2
+observed_pct,6.5,26.1,31.9,74.1,8.8
+smr,0.62,1.17,1.22,1.87,0.78
+cancer_pct,2.9,6.1,7,6.8,1.9
+immunosupp_pct,2.5,4.3,2.8,6,1.6
+vent_pct,23.6,29.3,32.5,45.8,19.3
+icu_los_median_h,43.2,43.1,36.3,18.2,43.1
