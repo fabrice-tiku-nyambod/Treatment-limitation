@@ -62,3 +62,10 @@ __pycache__/
 Thumbs.db
 .DS_Store
 ~$*
+
+# ---- editor and build backups ----
+*.bak
+*.bak2
+*.tex.bak
+*.docx.bak
+MANUSCRIPT_v4.md.bak

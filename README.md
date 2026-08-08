@@ -1,7 +1,7 @@
 # Treatment limitation documentation and risk adjusted mortality benchmarking
 
 Analysis code for a study of 136,236 adult intensive care admissions across 190 US
-hospitals in the eICU Collaborative Research Database, examining whether between unit
+hospitals in the eICU Collaborative Research Database, asking whether between unit
 variation in treatment limitation documentation reflects patient case mix or local
 practice, and what it does to standardized mortality ratio benchmarking.
 
@@ -11,61 +11,89 @@ ORCID [0009-0006-6592-2673](https://orcid.org/0009-0006-6592-2673).
 
 ---
 
-## Data access
+## Reproducing the analysis
 
-**No data are included in this repository and none can be.** eICU-CRD v2.0 is released
-under the PhysioNet Credentialed Health Data Use Agreement, which prohibits
-redistribution. Each investigator must be credentialed individually.
+**No data are included here and none can be.** eICU-CRD v2.0 is released under the
+PhysioNet Credentialed Health Data Use Agreement, which prohibits redistribution. Each
+investigator must be credentialed individually.
 
-To reproduce the analysis:
-
-1. Complete CITI human subjects research training and sign the data use agreement at
+1. Complete CITI human subjects research training and sign the DUA at
    [physionet.org/content/eicu-crd/2.0](https://physionet.org/content/eicu-crd/2.0/)
-2. Request BigQuery access on the same page, or download the flat files
-3. Run `sql/02_build_analytic_dataset.sql` to produce `data_private/analytic.csv`
-4. Run the R scripts in numerical order
+2. Request BigQuery access on the same page
+3. Run `sql/02_build_analytic_dataset.sql` and save the result as
+   `data_private/analytic.csv`
+4. Then run everything:
 
-The extraction query is deterministic, so step 3 reproduces the analytic dataset exactly.
+```
+Rscript run_all.R
+```
+
+`run_all.R` checks for the analytic file, installs any missing packages, and runs every
+step in order. The extraction query is deterministic, so step 3 reproduces the dataset
+exactly.
 
 ## Pipeline
 
+Scripts in `R/` run in the order listed by `run_all.R`.
+
+### Analysis
+
 | Script | Purpose |
 |---|---|
-| `sql/00_access_probe.sql` | confirm BigQuery access, zero byte queries |
-| `sql/01_feasibility_probe.sql` | go / no go probes with decision rules fixed in advance |
-| `sql/02_build_analytic_dataset.sql` | one row per unit stay, the analytic dataset |
-| `R/01_load_validate.R` | load and reproduce the descriptive figures from BigQuery |
-| `R/02_recalibration_models.R` | logistic recalibration, the primary analysis |
-| `R/03_calibration_hospital_timing.R` | calibration by stratum, ICI, unit variation, timing |
-| `R/05_discrimination.R` | held out AUC and Brier, DeLong test |
-| `R/06_hospital_reranking.R` | ranking with and without limitation in the risk model |
-| `R/07_practice_vs_casemix.R` | is the variation practice or case mix |
-| `R/14_cobalt_balance.R` | inverse probability weighting and covariate balance |
-| `R/15_build_panels.R` | the four panelled figures, TIFF and vector PDF |
-| `R/17_table2_overall.R` | calibration table, whole cohort |
-| `R/18` to `R/23` | reference verification against NCBI and Crossref |
-| `R/24_compile_latex.R` | compile the LaTeX manuscript |
-| `R/25_build_full_docx.R` | build the Word manuscript |
+| `01_load_validate.R` | Load and reproduce the descriptive figures obtained directly from BigQuery |
+| `02_recalibration_models.R` | Logistic recalibration of APACHE IVa, standard errors clustered on unit. The primary analysis |
+| `17_table2_overall.R` | Calibration by limitation stratum, SMR, integrated calibration index |
+| `03_calibration_hospital_timing.R` | Calibration curves, between unit variation, timing of limitation |
+| `05_discrimination.R` | Held out AUC and Brier score, DeLong test |
+| `06_hospital_reranking.R` | Unit ranking with and without limitation in the risk model |
+| `07_practice_vs_casemix.R` | Whether variation is practice or case mix, and which remedy works |
+| `14_cobalt_balance.R` | Inverse probability weighting and covariate balance |
 
-`R/10_validate_palette.R` validates the figure palette against a white print surface for
-color vision deficiency separation, contrast, and monotonic lightness under grayscale
-printing. The chosen ramp clears all four gates.
+### Outputs
 
-## What is deliberately excluded
+| Script | Purpose |
+|---|---|
+| `10_validate_palette.R` | Validates the figure palette for color vision deficiency separation, contrast and grayscale printing |
+| `35_flow_diagram.R` | Figure S1, cohort derivation with exclusion arms |
+| `15_build_panels.R` | Figures 1 to 3, 600 dpi TIFF plus vector PDF |
+| `11_submission_build.R` | Tables to Word |
+| `25_build_full_docx.R` | Manuscript, Word |
+| `32_build_supplement_docx.R` | Supplementary material, Word |
+| `24_compile_latex.R` | Manuscript PDF via TinyTeX |
+
+`R/maintenance/` holds one time operations already applied to the committed files, kept
+for provenance. `R/archive/` holds superseded scripts. See `R/maintenance/README.md`.
+
+## Key results
+
+| | |
+|---|---|
+| Cohort | 136,236 stays, 190 units, 2014 to 2015 |
+| Code status documented within 24h | 96.1% |
+| Limitation beyond full therapy | 9.9% |
+| SMR, full therapy to comfort measures | 0.62 to 1.87 |
+| Integrated calibration index, same strata | 0.037 to 0.342 |
+| Limitation rate, highest vs lowest quintile, after weighting | 2.89 fold, from 3.58 unweighted |
+| Units changing quartile when limitation is modeled | 23.5% |
+| Units changing outlier classification | 8.0% |
+| Excluding comfort measures admissions only, 0.6% of the cohort | reclassifies 11.1% of units |
+
+## What is deliberately excluded from this repository
 
 - `data_private/` — patient level data under the DUA
 - `results/models.rds` — fitted `glm` objects retain the full model frame, 136,236 rows
-  per model, and are therefore patient level
-- reference PDFs and their extracted text — copyrighted, obtained via institutional access
+  in each of four models, so the file is patient level despite its name
+- Reference PDFs and their extracted text — copyrighted, obtained via institutional access
 
-Unit level aggregates in `results/` and `submission/supplementary/` contain no patient
-level information and are safe to share.
+Unit level aggregates in `results/` and `submission/supplementary/` carry no patient level
+information and are safe to share.
 
 ## Environment
 
-R 4.6.0 with `data.table`, `ggplot2`, `patchwork`, `lme4`, `sandwich`, `lmtest`, `pROC`,
-`cobalt`, `WeightIt`, `officer`, `flextable`, `magick`, `httr`, `jsonlite`, `colorspace`.
-LaTeX via TinyTeX. BigQuery access via the Google Cloud SDK.
+R 4.6.0. Packages: `data.table`, `ggplot2`, `patchwork`, `lme4`, `sandwich`, `lmtest`,
+`pROC`, `cobalt`, `WeightIt`, `officer`, `flextable`, `magick`, `colorspace`, `scales`,
+`httr`, `jsonlite`, `pdftools`, `tinytex`. LaTeX via TinyTeX. BigQuery access via the
+Google Cloud SDK.
 
 ## Reproducibility notes
 
@@ -76,8 +104,8 @@ when malignancy proved to add nothing to prediction. This is disclosed in the ma
 under protocol registration.
 
 Every reference was resolved against NCBI E-utilities or Crossref. A title search pass
-returned the wrong article for four references, which were detected by reading the
-returned titles and removed. `R/20_prune_bad_bib.R` records that correction.
+returned the wrong article for four references, detected by reading the returned titles
+and removed. `R/maintenance/20_prune_bad_bib.R` records that correction.
 
 ## License
 

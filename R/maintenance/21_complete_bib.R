@@ -106,7 +106,10 @@ cited <- c(1,2,5,6,7,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,
 cat(sprintf("entries in references.bib : %d\n", length(keys)))
 cat(sprintf("cited in manuscript       : %d\n", length(cited)))
 miss <- setdiff(cited, keys)
-if (length(miss)) cat(sprintf("STILL MISSING             : %s\n", paste(miss, collapse=", ")))
-else cat("every cited reference is present and verified\n")
+if (length(miss)) {
+  cat(sprintf("STILL MISSING             : %s\n", paste(miss, collapse = ", ")))
+} else {
+  cat("every cited reference is present and verified\n")
+}
 extra <- setdiff(keys, cited)
 if (length(extra)) cat(sprintf("in bib but uncited        : %s\n", paste(extra, collapse=", ")))

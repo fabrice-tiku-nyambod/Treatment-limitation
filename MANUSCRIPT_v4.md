@@ -1,4 +1,4 @@
-# Treatment Limitation Documentation and Risk Adjusted Mortality Benchmarking in 190 US Intensive Care Units
+﻿# Treatment Limitation Documentation and Risk Adjusted Mortality Benchmarking in 190 US Intensive Care Units
 
 **Draft v4, 2026-08-06.** Target *Annals of the American Thoracic Society*.
 Reference numbers follow `REFERENCES.md`.
@@ -38,66 +38,65 @@ units documenting limitations more often.
 
 ---
 
-## Introduction
+## 1. Introduction
 
 End of life practice varies widely between intensive care units. Withdrawal of life
 sustaining treatment among patients who die ranges from 0 to 84 percent across published
-cohorts (31). The Ethicus-2 investigators found comparable variation across 199 units in
-36 countries (32). Variation has been documented between countries, between regions and
-between units within a single country (31, 36, 37). Two academic centers at opposite
+cohorts (1). The Ethicus-2 investigators found comparable variation across 199 units in
+36 countries (2). Variation has been documented between countries, between regions and
+between units within a single country (1, 3, 4). Two academic centers at opposite
 extremes of treatment intensity differed in decision making norms rather than in patients
-(34). Hospital level measures of end of life treatment intensity have been developed and
-validated for precisely this reason (33). Hart and colleagues studied 277,693 admissions
+(5). Hospital level measures of end of life treatment intensity have been developed and
+validated for precisely this reason (6). Hart and colleagues studied 277,693 admissions
 to 141 US units and found the proportion admitted with existing treatment limitations
-ranged from under 1 percent to 20.9 percent after risk adjustment (30). Measurable center
-characteristics did not explain that variation (30).
+ranged from under 1 percent to 20.9 percent after risk adjustment (7). Measurable center
+characteristics did not explain that variation (7).
 
 Treatment limitation is common in critical illness. Do not resuscitate orders were
-recorded in 13 percent of 24,790 admissions to one tertiary unit over 19 years (24), and
+recorded in 13 percent of 24,790 admissions to one tertiary unit over 19 years (8), and
 in 36.6 percent of a medical intensive care cohort when orders for life sustaining
-treatment were included (22). Timing varies, with roughly a quarter of orders written
-within 48 hours of admission and the remainder later (25). These orders carry substantial
+treatment were included (9). Timing varies, with roughly a quarter of orders written
+within 48 hours of admission and the remainder later (10). These orders carry substantial
 prognostic weight. Mortality among patients with such orders is several times that of
-patients without them (22, 26), and the association persists after propensity matching
-(29). Placing an order also changes subsequent care, including the intensity of
-interventions delivered (23).
+patients without them (9, 11), and the association persists after propensity matching
+(12). Placing an order also changes subsequent care, including the intensity of
+interventions delivered (13).
 
 Severity of illness scores estimate the probability of death under full treatment. The
 APACHE method was introduced in 1985 and validated on 5,815 admissions from 13 hospitals
-(2). The APACHE IVa model was derived from 110,558 admissions to 104 units during 2002
-and 2003 (1). Its covariates describe
-physiology, age, comorbidity and admission diagnosis (1). Comparable models including
-SAPS 3 and the Simplified Acute Physiology Score share this structure (10, 11). No
+(14). The APACHE IVa model was derived from 110,558 admissions to 104 units during 2002
+and 2003 (15). Its covariates describe
+physiology, age, comorbidity and admission diagnosis (15). Comparable models including
+SAPS 3 and the Simplified Acute Physiology Score share this structure (16, 17). No
 covariate in any of them represents a decision to withhold resuscitation. An order not to
 resuscitate alters the probability of death without altering any variable the model
 observes.
 
 The performance of these models is known to be unstable. Discrimination and calibration
-deteriorate as practice changes, which is why successive versions have been required (6,
-7). Performance also differs across ethnic groups within the same health system (9). Calibration is generally the first property to fail while
-discrimination is preserved (6).
+deteriorate as practice changes, which is why successive versions have been required (18, 19). Performance also differs across ethnic groups within the same health system (20). Calibration is generally the first property to fail while
+discrimination is preserved (18).
 
 Standardized mortality ratios derived from these scores are the accepted currency of
-intensive care benchmarking (12). Units are compared and ranked on observed deaths
-divided by predicted deaths, and in some systems reimbursed on that basis (12). The
-ratio is assumed to isolate quality of care once case mix is accounted for (12).
+intensive care benchmarking (21). Units are compared and ranked on observed deaths
+divided by predicted deaths, and in some systems reimbursed on that basis (21). The
+ratio is assumed to isolate quality of care once case mix is accounted for (21).
 Several lines of evidence suggest the assumption is fragile. Glance and colleagues showed
-that the choice of scoring system determines which units are labeled outliers (12).
+that the choice of scoring system determines which units are labeled outliers (21).
 Kramer and colleagues compared APACHE IVa against a National Quality Forum model across
 89,353 admissions and found the two agreed on the direction and significance of the
-standardized mortality ratio in only 45 percent of units (13). Admission patterns alone
-alter mortality based performance measures (14). Risk adjusted mortality carries
+standardized mortality ratio in only 45 percent of units (22). Admission patterns alone
+alter mortality based performance measures (23). Risk adjusted mortality carries
 conceptual limits that constrain its use as a quality signal, since a statistically
-unexpected death is not the same as a preventable one (15). Model misspecification
-introduces bias into the resulting quality measures (19), and alternative modeling
-strategies produce materially different unit level estimates (16, 17).
+unexpected death is not the same as a preventable one (24). Model misspecification
+introduces bias into the resulting quality measures (25), and alternative modeling
+strategies produce materially different unit level estimates (26, 27).
 
 Whether treatment limitation practice distorts these comparisons has not been tested.
 Hart and colleagues proposed that advance care planning norms contribute to variation in
-intensive care use and demonstrated the mechanism by simulation (35). Feng and Dubin
+intensive care use and demonstrated the mechanism by simulation (28). Feng and Dubin
 identified variables associated with incorrect APACHE IVa predictions in a multicenter
 database and included the frequency of care limitation change among them, but examined
-classification error rather than calibration (47). No study has measured the consequence
+classification error rather than calibration (29). No study has measured the consequence
 for risk adjusted mortality benchmarking in observed data.
 
 We examined 136,236 admissions to 190 US intensive care units. We asked whether APACHE
@@ -107,25 +106,26 @@ for limitation changes how units are ranked.
 
 ---
 
-## Methods
+## 2. Methods
 
 ### Data source
 
 We analyzed the eICU Collaborative Research Database version 2.0, which contains 200,859
 unit stays at 208 US hospitals participating in a tele critical care program during
-2014 and 2015 (46). The database carries vital signs, laboratory values, care plan
-documentation, severity scores and outcomes (46), and has been characterized in detail
-elsewhere (49). It is deidentified and was accessed under a data use agreement following
-completion of human subjects research training (46). Institutional review board approval
+2014 and 2015 (30). The database carries vital signs, laboratory values, care plan
+documentation, severity scores and outcomes (30), and has been characterized in detail
+elsewhere (31). It is deidentified and was accessed under a data use agreement following
+completion of human subjects research training (30). Institutional review board approval
 was waived for analysis of this deidentified resource. Reporting follows the TRIPOD
-recommendations for studies evaluating prediction models (44, 45).
+recommendations for studies evaluating prediction models (32, 33).
 
 ### Cohort
 
-We included adult unit stays with a valid APACHE IVa predicted hospital mortality linked
-to the APACHE predictor table, yielding 136,236 stays at 190 units. Unit level analyses
-were restricted to the 162 units contributing 100 or more stays, comprising 135,325
-admissions. Figure 1 shows the derivation.
+Of 200,859 adult unit stays, 52,327 were excluded because no APACHE IVa result was
+recorded and a further 12,296 because the predicted hospital mortality was unavailable or
+zero, leaving 136,236 stays at 190 units. Unit level analyses were restricted to the 162
+units contributing 100 or more stays, excluding 911 stays in 28 smaller units and leaving
+135,325 admissions. Figure S1 shows the derivation.
 
 ### Exposure
 
@@ -139,7 +139,7 @@ restrictive category. Stays with no entry were retained as an undocumented categ
 reported but not interpreted.
 
 The 24 hour window follows prior work distinguishing early from late limitation orders
-(25) and limits the degree to which the exposure reflects deterioration occurring
+(10) and limits the degree to which the exposure reflects deterioration occurring
 later in the stay.
 
 ### Outcome
@@ -152,28 +152,28 @@ Calibration was assessed by logistic recalibration, regressing observed mortalit
 logit of predicted mortality. A slope of 1 and an intercept of 0 indicate perfect
 calibration. Within strata we report the standardized mortality ratio and the integrated
 calibration index, the mean absolute difference between a smoothed observed risk and the
-predicted risk (39, 40). Standard errors were clustered on unit throughout.
+predicted risk (34, 35). Standard errors were clustered on unit throughout.
 
 The independent contribution of limitation status was estimated by adding it to a
 recalibration model containing the APACHE linear predictor. Malignancy was included to
-test whether an established source of miscalibration behaves similarly (48).
+test whether an established source of miscalibration behaves similarly (36).
 Discrimination was assessed on a random 30 percent holdout of 40,871 admissions by area
 under the receiver operating characteristic curve with DeLong's test and by Brier score.
 
 To distinguish practice from case mix we compared units in the highest and lowest
 quintile of limitation rate. Patient characteristics were balanced by inverse probability
 of treatment weighting estimated by logistic regression, following recommended practice
-(56). Balance was assessed by standardized mean differences against a threshold of 0.1
-(56). We then compared limitation rates between quintiles before and after weighting. If
+(37). Balance was assessed by standardized mean differences against a threshold of 0.1
+(37). We then compared limitation rates between quintiles before and after weighting. If
 case mix accounted for the difference, balancing case mix should remove it. Between unit
 variation was additionally summarized by the intraclass correlation coefficient and the
-median odds ratio from mixed effects models with a unit random intercept (42, 43).
+median odds ratio from mixed effects models with a unit random intercept (38, 39).
 
 To quantify the benchmarking consequence, expected deaths per unit were computed twice.
 The first used a recalibrated APACHE IVa model representing current practice. The second
 added limitation status. Units were ranked by standardized mortality ratio under each and
 compared on rank shift, quartile change and outlier status using exact Poisson 95 percent
-limits following Spiegelhalter (41). We additionally evaluated two simpler strategies,
+limits following Spiegelhalter (40). We additionally evaluated two simpler strategies,
 excluding admissions under comfort measures orders and excluding all admissions with any
 limitation.
 
@@ -181,7 +181,7 @@ Analyses used R version 4.6.0.
 
 ---
 
-## Results
+## 3. Results
 
 ### Cohort
 
@@ -201,9 +201,9 @@ of 66 against 49. Patients under comfort measures orders had a median APACHE IVa
 The overall calibration slope was 1.005 with an intercept of negative 0.425. The model
 ranks patients almost perfectly and is uniformly displaced, over predicting death across
 the entire risk range. This pattern of preserved discrimination with failed calibration
-matches that described for severity scores in contemporary cohorts (6).
+matches that described for severity scores in contemporary cohorts (18).
 
-Calibration differed sharply by limitation status (Figure 2A). The standardized mortality
+Calibration differed sharply by limitation status (Table 2, Figure 1A). The standardized mortality
 ratio was 0.62 under full therapy, 1.17 with resuscitation limitation, 1.22 with partial
 withdrawal and 1.87 under comfort measures only. The integrated calibration index was
 0.039, 0.037 and 0.054 in the first three strata and 0.34 under comfort measures. In that
@@ -211,19 +211,19 @@ stratum the model is not miscalibrated but uninformative.
 
 In a recalibration model with full therapy as reference, the adjusted odds of death were
 2.63 with resuscitation limitation, 2.97 with partial withdrawal and 15.30 under comfort
-measures only (Figure 2B). Metastatic or hematologic malignancy carried an adjusted odds
+measures only (Figure 1B). Metastatic or hematologic malignancy carried an adjusted odds
 ratio of 1.15. Adding limitation status reduced model deviance by 3.6 percent against 0.0
 percent for malignancy, and the likelihood ratio statistic was 2,136 against 17.
 
 On held out data, adding limitation status improved the area under the curve from 0.8657
 to 0.8760, significant by DeLong's test at p less than 0.001, and reduced the Brier score
 from 0.0621 to 0.0579. Adding malignancy changed the area under the curve by 0.0001,
-which was not significant.
+which was not significant (Table S1).
 
 ### Variation between units is not explained by case mix
 
 Across 162 units, limitation rates ranged from 0 to 27.5 percent with a median of 10.5
-percent (Figure 3A). One unit documented no limitation across more than 100 admissions.
+percent (Figure 2A). One unit documented no limitation across more than 100 admissions.
 
 Units in the highest limitation quintile differed from those in the lowest on two of 13
 measured characteristics before weighting. Patients were older, with a standardized mean
@@ -232,7 +232,7 @@ Severity was near identical, at negative 0.006 for the APACHE IVa score and 0.00
 predicted mortality.
 
 After inverse probability weighting all 13 covariates balanced within the 0.1 threshold
-(Figure 3B). Age fell to negative 0.004 and admission from the emergency department to
+(Figure 2B). Age fell to negative 0.004 and admission from the emergency department to
 0.004. Despite complete balance on measured characteristics, units in the highest
 quintile documented limitation in 16.5 percent of admissions against 5.7 percent in the
 lowest, a ratio of 2.89. The unweighted ratio was 3.58. Approximately four fifths of the
@@ -241,22 +241,22 @@ difference in practice survived balancing of patient case mix.
 Mixed effects models gave the same answer. The intraclass correlation was 0.084 before
 adjustment and 0.104 after adjustment for case mix. The median odds ratio rose from 1.69
 to 1.80, indicating that moving a patient between randomly chosen units changes the odds
-of documented limitation by close to twofold (43).
+of documented limitation by close to twofold (39).
 
 ### Consequences for benchmarking
 
 Adding limitation status to the risk model preserved the overall ordering of units, with
-a Spearman correlation of 0.949, while moving individual units substantially. The median
-absolute rank shift was 7.5 positions of 162. Sixty two units moved more than 10
-positions and 24 moved more than 20.
+a Spearman correlation of 0.949, while moving individual units substantially (Table S2).
+The median absolute rank shift was 7.5 positions of 162. Sixty two units moved more than
+10 positions and 24 moved more than 20.
 
 Thirty eight units, or 23.5 percent, changed quartile. Thirteen units, or 8.0 percent,
-changed outlier classification against exact Poisson limits (41). Four units previously
+changed outlier classification against exact Poisson limits (40). Four units previously
 flagged as high mortality became unremarkable and three previously unremarkable units
-became outliers (Figure 4B).
+became outliers (Figure 3B).
 
 Movement was systematic. The signed rank shift correlated with a unit's limitation rate
-at a Spearman coefficient of negative 0.689 (Figure 4A). Units in the lowest limitation
+at a Spearman coefficient of negative 0.689 (Figure 3A). Units in the lowest limitation
 quintile moved from a standardized mortality ratio of 0.984 to 1.027. Units in the
 highest quintile moved from 1.013 to 0.876. Under current benchmarking these quintiles
 appear equivalent. After accounting for limitation they do not.
@@ -264,40 +264,40 @@ appear equivalent. After accounting for limitation they do not.
 ### A simpler remedy
 
 Excluding the 878 admissions under comfort measures orders, 0.6 percent of the cohort,
-reclassified 18 units across quartiles, or 11.1 percent. Full adjustment for the ordered
-limitation scale reclassified 38 units, or 23.5 percent. Excluding all 13,496 admissions
-with any limitation reclassified 46 units, or 28.4 percent. Excluding the smallest group
-recovered roughly half the effect of full adjustment.
+reclassified 18 units across quartiles, or 11.1 percent (Table 3). Full adjustment for the
+ordered limitation scale reclassified 38 units, or 23.5 percent. Excluding all 13,496
+admissions with any limitation reclassified 46 units, or 28.4 percent. Excluding the
+smallest group recovered roughly half the effect of full adjustment.
 
 ---
 
-## Discussion
+## 4. Discussion
 
 APACHE IVa calibration depends on a decision the model does not observe. The standardized
 mortality ratio was 0.62 among patients receiving full therapy and 1.87 among patients
 under comfort measures. The integrated calibration index in that stratum was nine times
-larger than elsewhere (39). The model is not merely displaced in these patients. It is
+larger than elsewhere (34). The model is not merely displaced in these patients. It is
 uninformative.
 
 Documentation of limitation varied severalfold between units and patient case mix did not
 account for it. This extends Hart and colleagues, who reported comparable variation after
-regression adjustment in a different database a decade earlier (30). Our design equalized
-the covariate distributions rather than adjusting for them (56), and roughly four fifths
+regression adjustment in a different database a decade earlier (7). Our design equalized
+the covariate distributions rather than adjusting for them (37), and roughly four fifths
 of the practice difference persisted. Limitation rates were higher in our cohort than in
 theirs, 10.5 percent against 4.0 percent, consistent with the expansion of palliative
 care services over the intervening period. Palliative care consultation more than doubles
-transition to limitation orders in randomized comparison, from 23.4 to 50.5 percent (53),
+transition to limitation orders in randomized comparison, from 23.4 to 50.5 percent (41),
 and integration of palliative care into critical care alters both process and outcome
-measures (54, 55). Units therefore differ in limitation rate partly because they differ
+measures (42, 43). Units therefore differ in limitation rate partly because they differ
 in service configuration, which is a property of the unit rather than of its patients
-(34).
+(5).
 
 The consequence for benchmarking is substantial. Accounting for limitation moved 23.5
 percent of units across quartiles and reversed outlier classification for 8.0 percent.
 Kramer and colleagues found that substituting an entirely different risk model changed
 the direction and significance of the standardized mortality ratio in 55 percent of units
-(13). Glance and colleagues reached a similar conclusion comparing scoring systems (12),
-and admission patterns alone have been shown to shift these measures (14). We find that a
+(22). Glance and colleagues reached a similar conclusion comparing scoring systems (21),
+and admission patterns alone have been shown to shift these measures (23). We find that a
 single variable already recorded in 96 percent of charts moves a quarter of quartile
 assignments. The intervention is far smaller and the effect is of comparable order.
 
@@ -306,30 +306,30 @@ Adjustment treats limitation as patient preference and therefore as case mix. Wi
 adjustment treats it as modifiable unit behavior. Both positions are defensible. Nerenz
 and colleagues framed the identical dilemma for social risk factors, where adjustment may
 conceal real differences in care while omission penalizes institutions serving different
-populations (21). The parallel is exact. Misspecification of the adjustment model is
-itself a recognized source of bias in quality measurement (19). Our contribution is
+populations (44). The parallel is exact. Misspecification of the adjustment model is
+itself a recognized source of bias in quality measurement (25). Our contribution is
 not to settle the question but to show that the answer changes the rank of one unit in
 four, and that the choice is currently made by default.
 
 A simpler remedy exists. Excluding admissions under comfort measures orders affects six
 patients in every thousand and recovers half the effect. Benchmarking programs already
 exclude categories of patient from severity scoring, and the National Quality Forum model
-excludes 27.9 percent of admissions against 10.6 percent for APACHE IVa (13). Adding one
+excludes 27.9 percent of admissions against 10.6 percent for APACHE IVa (22). Adding one
 narrow exclusion is feasible within existing practice.
 
 This study has limitations. We observed documentation and not practice. Code status
 documentation in electronic records is frequently incomplete, difficult to locate or
-internally contradictory (50). Units may limit treatment without recording it, which would understate
+internally contradictory (45). Units may limit treatment without recording it, which would understate
 true variation. The data describe 2014 and 2015 and derive from units participating in a
-single tele critical care program (46). Limitation status is partly a consequence of
+single tele critical care program (30). Limitation status is partly a consequence of
 prognosis. Clinicians write these orders because they expect death, so limitation encodes
 information the score lacks and no causal interpretation is available. This same
-dependency has been shown to bias mortality based effect estimates in trauma (27).
+dependency has been shown to bias mortality based effect estimates in trauma (46).
 Adjusting for a variable partly under unit control carries the hazards of mediator
 adjustment. Weighting balanced measured characteristics only and unmeasured
-differences between units may remain (56). Cancer ascertainment relied on APACHE
+differences between units may remain (37). Cancer ascertainment relied on APACHE
 comorbidity flags and captured metastatic solid tumor and hematologic malignancy only
-(48).
+(36).
 
 Intensive care units are ranked on mortality. Mortality depends on whether treatment is
 given. Whether treatment is given depends on a decision that varies severalfold between
@@ -338,7 +338,7 @@ end of life practice alongside quality of care.
 
 ---
 
-## Declarations
+## 5. Declarations
 
 **Funding.** No funding was received for conducting this study.
 

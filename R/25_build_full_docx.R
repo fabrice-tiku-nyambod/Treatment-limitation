@@ -19,8 +19,8 @@ FONT <- "Times New Roman"
 # --- figures to PNG for embedding (Word handles TIFF poorly) ---------------
 png_dir <- file.path(sub, "figures_png")
 dir.create(png_dir, showWarnings = FALSE)
-figs <- c("Figure1_flow", "Figure2_model_performance",
-          "Figure3_unit_variation", "Figure4_benchmarking")
+figs <- c("Figure1_model_performance", "Figure2_unit_variation",
+          "Figure3_benchmarking")
 for (f in figs) {
   src <- file.path(sub, "figures", paste0(f, ".tiff"))
   dst <- file.path(png_dir, paste0(f, ".png"))
@@ -119,7 +119,7 @@ doc <- doc |>
                      fp_p = fp_par(line_spacing = 1.5, padding.bottom = 14)))
 for (kv in list(c("Running head", "Treatment limitation and ICU benchmarking"),
                 c("Word count, body", "2704"),
-                c("Tables", "5"), c("Figures", "4"),
+                c("Tables", "3"), c("Figures", "3"),
                 c("Keywords", "intensive care, benchmarking, standardized mortality ratio, treatment limitation, code status, risk adjustment"))) {
   doc <- body_add_fpar(doc, fpar(ftext(paste0(kv[1], ". "), prop = bold_fp),
                                  ftext(kv[2], prop = body_fp),
@@ -186,30 +186,12 @@ doc <- addtab(doc, "Table 2. APACHE IVa calibration by treatment limitation stat
               2.0, .85)
 doc <- body_add_break(doc)
 
-t3 <- fread(file.path(proj, "results", "table3_discrimination.csv"))
-doc <- addtab(doc, "Table 3. Discrimination and accuracy on held out data.",
-              flextable(t3),
-              "Held out sample n = 40,871. AUC denotes area under the receiver operating characteristic curve.",
-              2.2, .95)
-doc <- body_add_break(doc)
-
-t4 <- data.table(Measure = c("Spearman correlation of ranks","Median absolute rank shift",
-    "Units moving more than 10 positions","Units moving more than 20 positions",
-    "Units changing quartile","Units changing outlier classification",
-    "High mortality outlier to as expected","As expected to high mortality outlier"),
-  Value = c("0.949","7.5 of 162","62 (38.3%)","24 (14.8%)","38 (23.5%)","13 (8.0%)","4","3"))
-doc <- addtab(doc, "Table 4. Effect of modeling treatment limitation on unit ranking.",
-              flextable(t4),
-              "Based on 162 units with 100 or more admissions. Outlier status from exact Poisson 95 percent limits.",
-              3.4, 1.6)
-doc <- body_add_break(doc)
-
 t5 <- data.table(Strategy = c("Current practice, APACHE IVa alone","Adjust for limitation status",
     "Exclude comfort measures only","Exclude any limitation"),
   `Admissions affected` = c("0","0","878 (0.6%)","13,496 (9.9%)"),
   `Units changing quartile` = c("reference","38 (23.5%)","18 (11.1%)","46 (28.4%)"),
   `Correlation with current` = c("1.000","0.949","0.986","0.878"))
-doc <- addtab(doc, "Table 5. Comparison of remediation strategies.",
+doc <- addtab(doc, "Table 3. Comparison of remediation strategies.",
               flextable(t5),
               "Correlation is the Spearman rank correlation of standardized mortality ratios against current practice.",
               2.4, 1.35)
@@ -219,10 +201,9 @@ doc <- body_add_break(doc)
 doc <- body_add_fpar(doc, fpar(ftext("Figures", prop = h1_fp), fp_p = par_head))
 
 caps <- list(
-  c("Figure 1.", " Derivation of the study cohort from the eICU Collaborative Research Database version 2.0.", 3.2),
-  c("Figure 2.", " APACHE IVa performance by treatment limitation status. (A) Calibration curves. Points are 5 percent risk bins and the dashed line indicates perfect calibration. (B) Adjusted odds ratios for in hospital death from a logistic recalibration model, with full therapy as reference and standard errors clustered on unit.", 6.5),
-  c("Figure 3.", " Between unit variation in treatment limitation. (A) Limitation rate within 24 hours across 162 units with 100 or more admissions, ordered. (B) Standardised mean differences in patient characteristics between units in the highest and lowest limitation quintile, before and after inverse probability weighting.", 6.5),
-  c("Figure 4.", " Effect of modeling treatment limitation on unit benchmarking. (A) Change in unit rank against limitation rate. Negative values indicate improvement. (B) Funnel plots of standardized mortality ratio against expected deaths under current practice and with limitation modeled, with 95 and 99.8 percent exact Poisson control limits.", 6.5))
+  c("Figure 1.", " APACHE IVa performance by treatment limitation status. (A) Calibration curves. Points are 5 percent risk bins and the dashed line indicates perfect calibration. (B) Adjusted odds ratios for in hospital death from a logistic recalibration model, with full therapy as reference and standard errors clustered on unit.", 6.5),
+  c("Figure 2.", " Between unit variation in treatment limitation. (A) Limitation rate within 24 hours across 162 units with 100 or more admissions, ordered. (B) Standardized mean differences in patient characteristics between units in the highest and lowest limitation quintile, before and after inverse probability weighting.", 6.5),
+  c("Figure 3.", " Effect of modeling treatment limitation on unit benchmarking. (A) Change in unit rank against limitation rate. Negative values indicate improvement. (B) Funnel plots of standardized mortality ratio against expected deaths under current practice and with limitation modeled, with 95 and 99.8 percent exact Poisson control limits.", 6.5))
 
 for (i in seq_along(figs)) {
   p <- file.path(png_dir, paste0(figs[i], ".png"))
