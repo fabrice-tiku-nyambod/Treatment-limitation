@@ -2,9 +2,9 @@
 # 11_submission_build.R
 #
 # Builds the submission package.
-#   submission/figures/       TIFF, 600 dpi, LZW, validated palette
-#   submission/tables/        Word tables, fixed widths, journal formatting
-#   submission/supplementary/ supplementary tables
+#   submission_jicm/figures/       TIFF, 600 dpi, LZW, validated palette
+#   submission_jicm/tables/        Word tables, fixed widths, journal formatting
+#   submission_jicm/supplementary/ supplementary tables
 #
 # Palette: mako [0.05, 0.70], validated in 10_validate_palette.R against a
 # white print surface. Normal-vision dE 17.6, CVD dE 15.8, contrast 2.52,
@@ -15,8 +15,8 @@ suppressPackageStartupMessages({
   library(data.table); library(ggplot2); library(officer); library(flextable)
 })
 
-proj <- "C:/Users/tikuf/Desktop/ICU-CodeStatus-Paper"
-sub  <- file.path(proj, "submission")
+proj <- normalizePath(".", winslash = "/")   # run from the project root
+sub  <- file.path(proj, "submission_jicm")
 for (p in c(sub, file.path(sub, "figures"), file.path(sub, "tables"),
             file.path(sub, "supplementary"))) dir.create(p, showWarnings = FALSE)
 

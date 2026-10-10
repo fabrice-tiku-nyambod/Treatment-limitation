@@ -2,7 +2,7 @@
 # The earlier table2 was stratified by cancer as well, so its ICI values
 # describe the non-cancer subgroup only and must not be quoted as overall.
 suppressPackageStartupMessages(library(data.table))
-proj <- "C:/Users/tikuf/Desktop/ICU-CodeStatus-Paper"
+proj <- normalizePath(".", winslash = "/")   # run from the project root
 d <- readRDS(file.path(proj, "data_private", "analytic.rds"))
 d[, pred := pmin(pmax(pred_hosp_mort, 1e-6), 1 - 1e-6)]
 d[, cs := factor(fifelse(lim_tier_24h==0,"Undocumented",

@@ -7,8 +7,8 @@
 
 suppressPackageStartupMessages(library(magick))
 
-proj <- "C:/Users/tikuf/Desktop/ICU-CodeStatus-Paper"
-src  <- file.path(proj, "submission", "figures")
+proj <- normalizePath(".", winslash = "/")   # run from the project root
+src  <- file.path(proj, "submission_jicm", "figures")
 dest <- file.path(proj, "figures", "previews")
 dir.create(dest, recursive = TRUE, showWarnings = FALSE)
 

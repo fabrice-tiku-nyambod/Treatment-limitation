@@ -1,0 +1,8 @@
+term,or,lo,hi,p
+"DNR type, Within 4 h",2.31,2.13,2.5,2.0785718103547e-94
+"DNR type, 4 to 24 h",3.25,2.95,3.59,2.02861141712258e-121
+"Partial withdrawal, Within 4 h",2.41,1.73,3.35,1.78603427895592e-07
+"Partial withdrawal, 4 to 24 h",3.47,2.4,5.03,4.00599795643501e-11
+"Comfort measures, Within 4 h",12.9,8.68,19.19,1.50379331258577e-36
+"Comfort measures, 4 to 24 h",16.25,12.65,20.87,1.40484182281264e-105
+Undocumented,1.38,1.09,1.76,0.00841055302458418

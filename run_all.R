@@ -13,8 +13,11 @@
 #     2. Request BigQuery access on the same page
 #     3. Run sql/02_build_analytic_dataset.sql and save the result as
 #        data_private/analytic.csv
+#     4. Run sql/03_limitation_timing.sql and save the result as
+#        data_private/limitation_timing.csv
 #
-#   The query is deterministic, so step 3 reproduces the dataset exactly.
+#   Both queries are deterministic, so steps 3 and 4 reproduce the dataset
+#   exactly.
 #
 # USAGE
 #   Rscript run_all.R
@@ -23,9 +26,9 @@
 proj <- normalizePath(".", winslash = "/")
 options(warn = 1)
 
-csv <- file.path(proj, "data_private", "analytic.csv")
-if (!file.exists(csv))
-  stop("data_private/analytic.csv not found. See the header of this file.")
+for (f in c("analytic.csv", "limitation_timing.csv"))
+  if (!file.exists(file.path(proj, "data_private", f)))
+    stop("data_private/", f, " not found. See the header of this file.")
 
 need <- c("data.table","ggplot2","patchwork","lme4","sandwich","lmtest","pROC",
           "cobalt","WeightIt","officer","flextable","magick","colorspace",
@@ -46,31 +49,36 @@ steps <- c(
   "R/06_hospital_reranking.R",       # ranking with and without limitation
   "R/07_practice_vs_casemix.R",      # practice or case mix, and which remedy
   "R/14_cobalt_balance.R",           # inverse probability weighting, balance
+  "R/40_limitation_timing.R",        # timing of orders within 24 h, Figure S2, Tables S6 and S7
   # --- outputs ------------------------------------------------------------
   "R/10_validate_palette.R",         # colour validation, reports only
   "R/35_flow_diagram.R",             # Figure S1, cohort derivation
   "R/15_build_panels.R",             # Figures 1 to 3, TIFF and vector PDF
   "R/11_submission_build.R",         # tables to Word
+  "R/37_ama_references.R",           # AMA reference list from references.bib
   "R/25_build_full_docx.R",          # manuscript, Word
   "R/32_build_supplement_docx.R",    # supplement, Word
-  "R/24_compile_latex.R"             # manuscript PDF via TinyTeX
+  "R/38_build_cover_letter.R",       # cover letter, Word
+  "R/44_coi_form.R",                 # conflict of interest declaration, Word
+  "R/42_docx_to_pdf.R",              # PDFs through Word, for reading
+  "R/43_strobe_checklist.R"          # EQUATOR checklists with page numbers read from Manuscript.pdf, Word and PDF
 )
 
 t0 <- Sys.time()
-for (s in steps) {
-  cat("\n", strrep("=", 70), "\n", s, "\n", strrep("=", 70), "\n", sep = "")
-  t <- system.time(source(file.path(proj, s), echo = FALSE))
-  cat(sprintf("\n[%s done in %.1fs]\n", basename(s), t[["elapsed"]]))
+for (step in steps) {
+  cat("\n", strrep("=", 70), "\n", step, "\n", strrep("=", 70), "\n", sep = "")
+  # each script runs in its own environment so its variables cannot collide
+  # with this driver or with one another
+  t <- system.time(source(file.path(proj, step), echo = FALSE,
+                          local = new.env(parent = globalenv())))
+  cat(sprintf("\n[%s done in %.1fs]\n", basename(step), t[["elapsed"]]))
 }
 cat(sprintf("\n\nall steps complete in %.1f minutes\n",
             as.numeric(difftime(Sys.time(), t0, units = "mins"))))
 
 cat("\nartifacts:\n")
-for (f in list.files(file.path(proj, "submission"), recursive = TRUE))
-  cat("  submission/", f, "\n", sep = "")
+for (f in list.files(file.path(proj, "submission_jicm"), recursive = TRUE))
+  cat("  submission_jicm/", f, "\n", sep = "")
 
-cat("\nNOTE. The Word manuscript is written in British spelling by the builder\n")
-cat("and converted afterwards. Run:\n")
-cat("  powershell -File R/maintenance/27_americanize_docx.ps1\n")
-cat("  powershell -File R/maintenance/34_number_headings.ps1\n")
-cat("Both edit the document in place and preserve manual formatting.\n")
+cat("\nNOTE. Enable continuous line numbering in Word before upload:\n")
+cat("  Layout > Line Numbers > Continuous\n")

@@ -1,0 +1,7 @@
+cs,after_full_therapy,n,smr,smr_lo,smr_hi,ici
+DNR type,FALSE,6677,1.09,1.03,1.15,0.019
+DNR type,TRUE,5252,1.25,1.19,1.31,0.063
+Partial withdrawal,FALSE,298,1.22,0.98,1.5,0.055
+Partial withdrawal,TRUE,391,1.22,1.02,1.44,0.058
+Comfort measures,FALSE,331,1.99,1.74,2.27,0.332
+Comfort measures,TRUE,547,1.82,1.65,2,0.348

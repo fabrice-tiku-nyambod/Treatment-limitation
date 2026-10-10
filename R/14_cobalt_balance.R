@@ -12,8 +12,8 @@ suppressPackageStartupMessages({
   library(data.table); library(cobalt); library(WeightIt); library(ggplot2)
 })
 
-proj <- "C:/Users/tikuf/Desktop/ICU-CodeStatus-Paper"
-sub  <- file.path(proj, "submission")
+proj <- normalizePath(".", winslash = "/")   # run from the project root
+sub  <- file.path(proj, "submission_jicm")
 PAL  <- c("#00B6B3", "#007AA5", "#433864", "#200F1D")
 INK  <- "#0b0b0b"; MUTED <- "#898781"; GRID <- "#e1e0d9"; ACC <- "#C81560"
 

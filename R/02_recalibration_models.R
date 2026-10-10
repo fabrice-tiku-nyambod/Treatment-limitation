@@ -15,7 +15,7 @@ suppressPackageStartupMessages({
   library(data.table); library(sandwich); library(lmtest)
 })
 
-proj <- "C:/Users/tikuf/Desktop/ICU-CodeStatus-Paper"
+proj <- normalizePath(".", winslash = "/")   # run from the project root
 d <- readRDS(file.path(proj, "data_private", "analytic.rds"))
 
 # --- prepare ---------------------------------------------------------------

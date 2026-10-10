@@ -1,0 +1,8 @@
+exposure,weighting,low,high,ratio
+Any limitation,Unweighted,5.3,19,3.58
+Any limitation,Weighted,5.7,16.5,2.89
+Early limitation,Unweighted,2.7,12.2,4.48
+Early limitation,Weighted,3,10.5,3.53
+Late limitation,Unweighted,2.6,6.7,2.62
+Late limitation,Weighted,2.7,5.9,2.2
+Early limitation,Mixed model,0.109523220904622,0.116015381078981,1.87157412297251

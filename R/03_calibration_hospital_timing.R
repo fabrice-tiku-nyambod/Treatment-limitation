@@ -8,7 +8,7 @@ suppressPackageStartupMessages({
   library(data.table); library(ggplot2); library(lme4)
 })
 
-proj <- "C:/Users/tikuf/Desktop/ICU-CodeStatus-Paper"
+proj <- normalizePath(".", winslash = "/")   # run from the project root
 d <- readRDS(file.path(proj, "data_private", "analytic.rds"))
 d[, pred := pmin(pmax(pred_hosp_mort, 1e-6), 1 - 1e-6)]
 d[, cs_lab := factor(fifelse(lim_tier_24h == 0, "Undocumented",

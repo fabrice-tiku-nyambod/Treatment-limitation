@@ -9,7 +9,10 @@
 #   Table S3   unit level case mix
 #   Table S4   unit level ranking comparison
 #   Table S5   covariate balance before and after weighting
+#   Table S6   calibration by tier and timing of the order
+#   Table S7   unit ranking under timing based strategies
 #   Figure S1  study flow
+#   Figure S2  timing of limitation orders and calibration by timing
 #
 # S3 to S5 are large per unit listings and are embedded here in full rather
 # than shipped as loose CSVs, so a reader has everything in one document.
@@ -19,8 +22,8 @@ suppressPackageStartupMessages({
   library(officer); library(flextable); library(data.table); library(magick)
 })
 
-proj <- "C:/Users/tikuf/Desktop/ICU-CodeStatus-Paper"
-sub  <- file.path(proj, "submission")
+proj <- normalizePath(".", winslash = "/")   # run from the project root
+sub  <- file.path(proj, "submission_jicm")
 FONT <- "Times New Roman"
 
 body_fp <- fp_text(font.family = FONT, font.size = 12)
@@ -69,7 +72,7 @@ doc <- doc |>
   body_add_fpar(fpar(ftext("Treatment Limitation Documentation and Risk Adjusted Mortality Benchmarking in 190 US Intensive Care Units",
                            prop = fp_text(font.family = FONT, font.size = 12, italic = TRUE)),
                      fp_p = fp_par(line_spacing = 1.5, padding.bottom = 10))) |>
-  body_add_fpar(fpar(ftext("Fabrice T. Nyambod, MD, MPH", prop = body_fp),
+  body_add_fpar(fpar(ftext("Fabrice T. Nyambod, January G. Msemakweli, Murishi Onesphore, Aja Claris, Victor Okpanachi", prop = body_fp),
                      fp_p = fp_par(line_spacing = 1.5, padding.bottom = 16))) |>
   body_add_fpar(fpar(ftext("Contents", prop = bold_fp), fp_p = par_head))
 for (l in c("Table S1. Discrimination and accuracy on held out data",
@@ -77,7 +80,10 @@ for (l in c("Table S1. Discrimination and accuracy on held out data",
             "Table S3. Unit level case mix and limitation rate",
             "Table S4. Unit level ranking comparison",
             "Table S5. Covariate balance before and after weighting",
-            "Figure S1. Derivation of the study cohort")) {
+            "Table S6. APACHE IVa calibration by limitation tier and timing of the order",
+            "Table S7. Unit ranking under strategies that count only early orders",
+            "Figure S1. Derivation of the study cohort",
+            "Figure S2. Timing of limitation orders and calibration by timing")) {
   doc <- body_add_fpar(doc, fpar(ftext(l, prop = body_fp),
                                  fp_p = fp_par(line_spacing = 1.15, padding.bottom = 2)))
 }
@@ -141,17 +147,49 @@ doc <- addtab(doc, "Table S5. Covariate balance between the highest and lowest l
               2.6, .95, 8)
 doc <- body_add_break(doc)
 
-# ---- Figure S1 ------------------------------------------------------------
+# ---- Table S6 -------------------------------------------------------------
+t6 <- fread(file.path(sub, "supplementary", "TableS6_calibration_by_timing.csv"))
+t6[, timing := fifelse(timing == "Reference", "", as.character(timing))]
+t6[, smr := sprintf("%.2f (%.2f-%.2f)", smr, smr_lo, smr_hi)]
+t6 <- t6[, .(`Limitation tier` = cs, `Timing of order` = timing, Admissions = n,
+             `Observed deaths` = observed, `Predicted deaths` = predicted,
+             `SMR (95% CI)` = smr, ICI = ici)]
+doc <- addtab(doc, "Table S6. APACHE IVa calibration by limitation tier and timing of the first order at that tier.",
+              flextable(t6),
+              "Timing is measured from unit admission to the first order at the stay's most restrictive tier. SMR denotes standardized mortality ratio with exact Poisson limits. ICI denotes integrated calibration index.",
+              1.2, .88, 8)
+doc <- body_add_break(doc)
+
+# ---- Table S7 -------------------------------------------------------------
+t7 <- fread(file.path(sub, "supplementary", "TableS7_reranking_by_timing.csv"))
+t7 <- t7[, .(Strategy = strategy,
+             `Spearman correlation with current` = sprintf("%.3f", spearman_smr),
+             `Median absolute rank shift` = median_abs_shift,
+             `Units changing quartile` = sprintf("%d (%.1f%%)", quartile_change_n, quartile_change_pct),
+             `Units changing outlier status` = sprintf("%d (%.1f%%)", outlier_change_n, outlier_change_pct),
+             `Rank shift against unit early limitation rate, rho` = sprintf("%.3f", rho_shift_vs_early_rate))]
+doc <- addtab(doc, "Table S7. Unit ranking under strategies that count only orders written within 4 hours of admission, or exclude comfort measures admissions by timing.",
+              flextable(t7),
+              "Based on 162 units with 100 or more admissions. Early denotes an order first documented within 4 hours of unit admission. Exclusion strategies refit the recalibration model on the retained cohort.",
+              2.3, .85, 8)
+doc <- body_add_break(doc)
+
+# ---- Figures S1 and S2 ----------------------------------------------------
 png_dir <- file.path(sub, "figures_png"); dir.create(png_dir, showWarnings = FALSE)
-src <- file.path(sub, "figures", "FigureS1_flow.tiff")
-dst <- file.path(png_dir, "FigureS1_flow.png")
-if (!file.exists(dst) || file.mtime(src) > file.mtime(dst))
-  image_write(image_read(src), dst, format = "png")
-d <- image_info(image_read(dst)); w <- 6.0; h <- w * d$height / d$width
-doc <- body_add_img(doc, dst, width = w, height = h, style = "centered")
-doc <- body_add_fpar(doc, fpar(ftext("Figure S1.", prop = capb_fp),
-  ftext(" Derivation of the study cohort from the eICU Collaborative Research Database version 2.0.",
-        prop = cap_fp), fp_p = par_cap))
+figS <- list(
+  c("FigureS1_flow", "Figure S1.", " Derivation of the study cohort from the eICU Collaborative Research Database version 2.0.", "6.0"),
+  c("FigureS2_timing", "Figure S2.", " Timing of limitation orders and calibration by timing. (A) Cumulative proportion of admissions at each tier by hours from unit admission to the first order at that tier. The dashed line marks 4 hours. (B) Standardized mortality ratio by tier and timing of the order, with exact Poisson 95% limits.", "6.5"))
+for (i in seq_along(figS)) {
+  f <- figS[[i]]
+  src <- file.path(sub, "figures", paste0(f[1], ".tiff"))
+  dst <- file.path(png_dir, paste0(f[1], ".png"))
+  if (!file.exists(dst) || file.mtime(src) > file.mtime(dst))
+    image_write(image_read(src), dst, format = "png")
+  d <- image_info(image_read(dst)); w <- as.numeric(f[4]); h <- w * d$height / d$width
+  doc <- body_add_img(doc, dst, width = w, height = h, style = "centered")
+  doc <- body_add_fpar(doc, fpar(ftext(f[2], prop = capb_fp), ftext(f[3], prop = cap_fp), fp_p = par_cap))
+  if (i < length(figS)) doc <- body_add_break(doc)
+}
 
 doc <- body_set_default_section(doc, prop_section(
   page_size = page_size(orient = "portrait"),

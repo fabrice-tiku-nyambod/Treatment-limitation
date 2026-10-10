@@ -5,9 +5,13 @@ hospitals in the eICU Collaborative Research Database, asking whether between un
 variation in treatment limitation documentation reflects patient case mix or local
 practice, and what it does to standardized mortality ratio benchmarking.
 
-**Author.** Fabrice T. Nyambod, MD, MPH. Department of International Health, Johns
-Hopkins Bloomberg School of Public Health, Baltimore, Maryland, USA.
-ORCID [0009-0006-6592-2673](https://orcid.org/0009-0006-6592-2673).
+**Authors.** Fabrice T. Nyambod (corresponding, Department of International Health,
+Johns Hopkins Bloomberg School of Public Health, ORCID
+[0009-0006-6592-2673](https://orcid.org/0009-0006-6592-2673)), January G. Msemakweli
+(Department of Epidemiology, Johns Hopkins Bloomberg School of Public Health), Murishi
+Onesphore (School-wide MPH Program, Johns Hopkins Bloomberg School of Public Health), Aja
+Claris (Independent Researcher, Baltimore), Victor Okpanachi (Department of Environmental
+Health Sciences, University of Arizona).
 
 ---
 
@@ -22,15 +26,18 @@ investigator must be credentialed individually.
 2. Request BigQuery access on the same page
 3. Run `sql/02_build_analytic_dataset.sql` and save the result as
    `data_private/analytic.csv`
-4. Then run everything:
+4. Run `sql/03_limitation_timing.sql` and save the result as
+   `data_private/limitation_timing.csv`
+5. Then run everything:
 
 ```
 Rscript run_all.R
 ```
 
-`run_all.R` checks for the analytic file, installs any missing packages, and runs every
-step in order. The extraction query is deterministic, so step 3 reproduces the dataset
-exactly.
+`run_all.R` checks for the analytic files, installs any missing packages, and runs every
+step in order. Both extraction queries are deterministic, so steps 3 and 4 reproduce the
+dataset exactly. Outputs land in `submission_jicm/`, the package prepared for the
+*Journal of Intensive Care Medicine*.
 
 ## Pipeline
 
@@ -48,6 +55,7 @@ Scripts in `R/` run in the order listed by `run_all.R`.
 | `06_hospital_reranking.R` | Unit ranking with and without limitation in the risk model |
 | `07_practice_vs_casemix.R` | Whether variation is practice or case mix, and which remedy works |
 | `14_cobalt_balance.R` | Inverse probability weighting and covariate balance |
+| `40_limitation_timing.R` | Timing of the order within the 24 hour window: calibration by timing, variation in early orders, ranking when only early orders count. Figure S2, Tables S6 and S7 |
 
 ### Outputs
 
@@ -57,9 +65,13 @@ Scripts in `R/` run in the order listed by `run_all.R`.
 | `35_flow_diagram.R` | Figure S1, cohort derivation with exclusion arms |
 | `15_build_panels.R` | Figures 1 to 3, 600 dpi TIFF plus vector PDF |
 | `11_submission_build.R` | Tables to Word |
-| `25_build_full_docx.R` | Manuscript, Word |
+| `37_ama_references.R` | AMA reference list from `references.bib` |
+| `25_build_full_docx.R` | Manuscript, Word, from `MANUSCRIPT.md`, written to `Manuscript_generated.docx`. `Manuscript.docx` is the hand finished submission copy and is never overwritten |
 | `32_build_supplement_docx.R` | Supplementary material, Word |
-| `24_compile_latex.R` | Manuscript PDF via TinyTeX |
+| `38_build_cover_letter.R` | Cover letter, Word, from `COVER_LETTER.md` |
+| `43_strobe_checklist.R` | EQUATOR checklists, STROBE and TRIPOD, with page numbers read from the final PDF, Word |
+| `44_coi_form.R` | Conflict of interest declaration, Word |
+| `42_docx_to_pdf.R` | PDF copies of each Word document through Microsoft Word, for reading |
 
 `R/maintenance/` holds one time operations already applied to the committed files, kept
 for provenance. `R/archive/` holds superseded scripts. See `R/maintenance/README.md`.
@@ -77,6 +89,10 @@ for provenance. `R/archive/` holds superseded scripts. See `R/maintenance/README
 | Units changing quartile when limitation is modeled | 23.5% |
 | Units changing outlier classification | 8.0% |
 | Excluding comfort measures admissions only, 0.6% of the cohort | reclassifies 11.1% of units |
+| Comfort measures orders written within 4 h of admission | 21.3%; 62.3% followed a full therapy entry |
+| SMR, comfort measures within 4 h vs 4 to 24 h | 2.03 vs 1.84 |
+| Limitation rate, highest vs lowest quintile, early orders only, after weighting | 3.53 fold |
+| Units changing quartile when only orders within 4 h are modeled | 9.9% |
 
 ## What is deliberately excluded from this repository
 
@@ -85,15 +101,15 @@ for provenance. `R/archive/` holds superseded scripts. See `R/maintenance/README
   in each of four models, so the file is patient level despite its name
 - Reference PDFs and their extracted text — copyrighted, obtained via institutional access
 
-Unit level aggregates in `results/` and `submission/supplementary/` carry no patient level
-information and are safe to share.
+Unit level aggregates in `results/` and `submission_jicm/supplementary/` carry no patient
+level information and are safe to share.
 
 ## Environment
 
-R 4.6.0. Packages: `data.table`, `ggplot2`, `patchwork`, `lme4`, `sandwich`, `lmtest`,
+R 4.6. Packages: `data.table`, `ggplot2`, `patchwork`, `lme4`, `sandwich`, `lmtest`,
 `pROC`, `cobalt`, `WeightIt`, `officer`, `flextable`, `magick`, `colorspace`, `scales`,
-`httr`, `jsonlite`, `pdftools`, `tinytex`. LaTeX via TinyTeX. BigQuery access via the
-Google Cloud SDK.
+`httr`, `jsonlite`. PDF export needs Microsoft Word and is skipped without it. BigQuery
+access via the Google Cloud SDK.
 
 ## Reproducibility notes
 
@@ -101,7 +117,8 @@ Decision thresholds for the feasibility probes were fixed before the correspondi
 analyses were run and are recorded in `sql/01_feasibility_probe.sql`. The study question
 was refined during exploratory work; an initial framing around malignancy was abandoned
 when malignancy proved to add nothing to prediction. This is disclosed in the manuscript
-under protocol registration.
+under protocol registration. The timing analyses in `40_limitation_timing.R` were added
+after editorial review and are described as such in the manuscript.
 
 Every reference was resolved against NCBI E-utilities or Crossref. A title search pass
 returned the wrong article for four references, detected by reading the returned titles
@@ -109,5 +126,5 @@ and removed. `R/maintenance/20_prune_bad_bib.R` records that correction.
 
 ## License
 
-Code released under the MIT License. The manuscript and figures are the author's work.
+Code released under the MIT License. The manuscript and figures are the authors' work.
 No eICU data are included under any license.

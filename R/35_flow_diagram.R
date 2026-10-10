@@ -18,8 +18,8 @@
 
 suppressPackageStartupMessages({ library(ggplot2); library(data.table) })
 
-proj <- "C:/Users/tikuf/Desktop/ICU-CodeStatus-Paper"
-sub  <- file.path(proj, "submission")
+proj <- normalizePath(".", winslash = "/")   # run from the project root
+sub  <- file.path(proj, "submission_jicm")
 INK <- "#0b0b0b"; MUTED <- "#5a5a57"; FONT <- "serif"
 
 main <- data.table(

@@ -1,0 +1,4 @@
+cs,n,median_min,q25_min,q75_min,pct_before_admission,pct_within_1h,pct_within_4h,pct_within_12h,pct_after_full_therapy,pct_dnr_first
+DNR type,11929,120,34,483,3.3,36,63,82.7,44,0
+Partial withdrawal,689,347,68,805,2.6,23.2,43.7,69.7,56.7,0
+Comfort measures,878,666,287.75,1052,0.5,6,21.3,52.3,62.3,46.6

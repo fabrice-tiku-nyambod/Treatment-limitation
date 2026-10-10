@@ -8,7 +8,7 @@ suppressPackageStartupMessages({
   library(data.table)
 })
 
-proj <- "C:/Users/tikuf/Desktop/ICU-CodeStatus-Paper"
+proj <- normalizePath(".", winslash = "/")   # run from the project root
 d <- fread(file.path(proj, "data_private", "analytic.csv"))
 
 cat("=== cohort ===\n")

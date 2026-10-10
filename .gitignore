@@ -24,13 +24,13 @@ results/models.rds
 # ---- copyrighted reference PDFs and their extracted text ----
 # Blanket exclusion, with our own outputs allowed back in.
 *.pdf
-!submission/Manuscript.pdf
-!submission/figures_pdf/*.pdf
+!submission_jicm/Manuscript.pdf
+!submission_jicm/figures_pdf/*.pdf
 refs_text/
 
 # ---- derived figure formats, regenerable from R/15 ----
 figures/previews/
-submission/figures_png/
+submission_jicm/figures_png/
 
 # ---- credentials ----
 *.netrc

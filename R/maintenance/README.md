@@ -14,6 +14,7 @@ a second time is either a no-op or will corrupt something.
 | `21_complete_bib.R` | Added the seven references verified individually against Crossref or the publisher record |
 | `22_drop_unsourced_refs.R` | Removed six references the author could not source, and repaired the sentences that depended on them |
 | `30_renumber_bib.R` | Renumbered keys to order of first citation |
+| `41_renumber_v5.R` | Renumbered `MANUSCRIPT.md` and the bib again after two references were added for the JICM revision |
 
 The lesson from script 20 is recorded because it matters: PubMed relevance
 ranking does not guarantee a title match. Any reference found by search must

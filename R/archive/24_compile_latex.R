@@ -7,8 +7,8 @@
 
 suppressPackageStartupMessages(library(tinytex))
 
-proj <- "C:/Users/tikuf/Desktop/ICU-CodeStatus-Paper"
-sub  <- file.path(proj, "submission")
+proj <- normalizePath(".", winslash = "/")   # run from the project root
+sub  <- file.path(proj, "submission_jicm")
 tex  <- file.path(sub, "Manuscript.tex")
 
 # point graphics at the PDF versions for the build

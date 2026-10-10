@@ -16,8 +16,8 @@ suppressPackageStartupMessages({
   library(sandwich); library(lmtest); library(cobalt); library(WeightIt)
 })
 
-proj <- "C:/Users/tikuf/Desktop/ICU-CodeStatus-Paper"
-sub  <- file.path(proj, "submission")
+proj <- normalizePath(".", winslash = "/")   # run from the project root
+sub  <- file.path(proj, "submission_jicm")
 PAL  <- c("Full therapy"="#00B6B3","DNR type"="#007AA5",
           "Partial withdrawal"="#433864","Comfort measures"="#200F1D")
 INK <- "#0b0b0b"; MUTED <- "#898781"; GRID <- "#e1e0d9"; ACC <- "#C81560"
